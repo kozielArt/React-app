@@ -16,3 +16,7 @@ const { name: publisherName, city, agency = 'Agency' } = book.publisher
 if(publisherName && city) {
   console.log(`Publisher name is ${publisherName}, city is ${city}, agency is ${agency}`)
 }
+
+const item = ['Coffe (hot)', '2.25$', '2.50$' , '3$'];
+const [coffe, smallCoffePrice, mediumCoffePrice, largeCoffePrice] = item;
+console.log(`Prices for ${coffe} are: small: ${smallCoffePrice}, medium: ${mediumCoffePrice}, large: ${largeCoffePrice}`);
