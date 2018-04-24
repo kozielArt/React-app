@@ -2,30 +2,20 @@ import { createStore, combineReducers } from 'redux';
 import uuid from 'uuid';
 
 // ADD_EXPENSE
-const addExpense = (
-  {
-    description = '',
-    note = '',
-    amount = 0,
-    createdAt = 0
-  } = {}
-) => ({
+// {} = {} if no object is provided as an argument and we try to destructure it it is gonna get default values ' description = '' ' 
+const addExpense = ({ description = '', note = '', amount = '', createdAt = 0 } = {}) => ({
   type: 'ADD_EXPENSE',
-  expense: {
-    id: uuid(),
-    description,
-    note,
-    amount,
-    createdAt
-  }
-});
-
+  id: uuid(),
+  description,
+  note,
+  amount,
+  createdAt
+})
 // REMOVE_EXPENSE
-const removeExpense = ({ id } = {}) => ({
+const removeExpense = ({id} = {}) => ({
   type: 'REMOVE_EXPENSE',
   id
-});
-
+})
 // EDIT_EXPENSE
 // SET_TEXT_FILTER
 // SORT_BY_DATE
@@ -35,21 +25,16 @@ const removeExpense = ({ id } = {}) => ({
 
 // Expenses Reducer
 const expensesReducerDefaultState = [];
-
 const expensesReducer = (state = expensesReducerDefaultState, action) => {
   switch (action.type) {
     case 'ADD_EXPENSE':
-      return [
-        ...state,
-        action.expense
-      ];
+      return [...state, action]
     case 'REMOVE_EXPENSE':
-      return state.filter(({ id }) => id !== action.id);
+      return state.filter(({ id }) => id !== action.id) //create the array for all the expanses that id doesn't match the id from the action object 
     default:
       return state;
   }
-};
-
+}
 // Filters Reducer
 const filtersReducerDefaultState = {
   text: '',
@@ -57,14 +42,12 @@ const filtersReducerDefaultState = {
   startDate: undefined,
   endDate: undefined
 };
-
 const filtersReducer = (state = filtersReducerDefaultState, action) => {
   switch (action.type) {
     default:
       return state;
   }
-};
-
+}
 // Store creation
 const store = createStore(
   combineReducers({
@@ -80,4 +63,13 @@ store.subscribe(() => {
 const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100 }));
 const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 300 }));
 
-store.dispatch(removeExpense({ id: expenseOne.expense.id }));
+store.dispatch(removeExpense({id: expenseOne.id}))
+
+const person = { 
+  name: "artur",
+  age: 21
+}
+
+console.log({
+  ...person
+})
